@@ -1,0 +1,7 @@
+portfolio/secrets.py
+.env
+__pycache__/
+media
+*.pyc
+*.log
+db.sqlite3
