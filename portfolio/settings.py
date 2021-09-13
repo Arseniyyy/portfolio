@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 
 from dotenv import load_dotenv
-from django.contrib.auth import get_user_model
 
 
 load_dotenv()
@@ -24,8 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# DEBUG = os.environ.get('DEBUG', '') != 'False'
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -65,7 +63,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'portfolio/templates/',
-            BASE_DIR / 'templates'
+            BASE_DIR / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -87,12 +85,31 @@ APP_DIRS = []
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+MODE = os.environ.get('MODE')
+
+if MODE == 'prod':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT')
+        }
     }
-}
+
+elif MODE == 'dev':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('TEST_DB_NAME'),
+            'USER': os.environ.get('TEST_DB_USER'),
+            'PASSWORD': os.environ.get('TEST_DB_PASSWORD'),
+            'HOST': os.environ.get('TEST_DB_HOST'),
+            'PORT': os.environ.get('TEST_DB_PORT')
+        }
+    }
 
 # Logging
 LOGGING = {

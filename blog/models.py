@@ -4,13 +4,19 @@ from django.db import models
 class Tag(models.Model):
     name = models.CharField(max_length=30)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField('Tag', related_name='posts')
+    tags = models.ManyToManyField('Tag', related_name='posts')
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Comment(models.Model):
@@ -18,3 +24,6 @@ class Comment(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'{self.author[:5]}. {self.body[:20]}'

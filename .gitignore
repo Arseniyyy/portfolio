@@ -5,3 +5,4 @@ media
 *.pyc
 *.log
 db.sqlite3
+static

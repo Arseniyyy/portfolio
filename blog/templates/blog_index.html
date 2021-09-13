@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h1>Just look at these articles!</h1>
+    <hr>
+    {% if posts %}
+    {% for post in posts %}
+    <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+    <small>
+        {{ post.created_on.date }} |&nbsp;
+        Tags:&nbsp;
+        {% for tag in post.tags.all %}
+        <a href="{% url 'blog_tag' tag.name %}">
+            {{ tag.name }}
+        </a>
+        {% endfor %}
+    </small>
+    <p>{{ post.body | slice:":400" }}...</p>
+    {% endfor %}
+
+    {% else %}
+    <h2>There're no posts here yet &#128542;</h2>
+    {% endif %}
+
+
+</div>
+{% endblock %}

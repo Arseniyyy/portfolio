@@ -23,7 +23,3 @@ def project_detail(request, pk):
     }
 
     return render(request, 'project_detail.html', context)
-
-
-def test(request):
-    return render(request, 'test.html')
