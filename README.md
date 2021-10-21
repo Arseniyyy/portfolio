@@ -1,7 +1,7 @@
 # portfolio
 
 ## How to run it?
-First of all, you need to collect all your staticfiles in the root directory:
+First of all, you need to collect all your static files in the root directory:
 ```
 python3 manage.py collectstatic
 ```
